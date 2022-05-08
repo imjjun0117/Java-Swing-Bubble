@@ -12,7 +12,6 @@ import bubble.player.Player;
 
 /**
  * 버블 버블 게임 배경 설정 및 캐릭터 설정
- * @author imjju
  */
 @SuppressWarnings("serial")
 public class BubbleFrame extends JFrame {
@@ -51,12 +50,22 @@ public class BubbleFrame extends JFrame {
 	public void initListner() {
 		addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e) {
+			public void keyPressed(KeyEvent e) {//키보드 클릭했을 때의 동작
 				switch(e.getKeyCode()) {
-				case KeyEvent.VK_LEFT : player.left(); break; // 왼쪽 방향키 -> x축 -10만큼 이동 왼쪽 캐릭터이미지 설정
-				case KeyEvent.VK_RIGHT : player.right(); break; // 오른쪽 방향키 -> x축 +10만큼 이동 오른쪽 캐릭터이미지 설정
+				case KeyEvent.VK_LEFT : if(!player.isLeft() && !player.isLeftWallCrash()) player.left(); break; // 왼쪽 방향키 -> x축 -10만큼 이동 왼쪽 캐릭터이미지 설정
+				case KeyEvent.VK_RIGHT :if(!player.isRight() && !player.isRightWallCrash())player.right(); break; // 오른쪽 방향키 -> x축 +10만큼 이동 오른쪽 캐릭터이미지 설정
+				case KeyEvent.VK_UP : if(!player.isUp()&&!player.isDown())player.up(); break; // 윗쪽 방향키  
 				}//end switch
 			}//keyPressed
+
+			@Override
+			public void keyReleased(KeyEvent e) {//키보드 떼었을 때 동작
+				switch(e.getKeyCode()) {
+				case KeyEvent.VK_LEFT : player.setLeft(false); break; // 왼쪽 방향키 -> x축 -10만큼 이동 왼쪽 캐릭터이미지 설정
+				case KeyEvent.VK_RIGHT :player.setRight(false); break; // 오른쪽 방향키 -> x축 +10만큼 이동 오른쪽 캐릭터이미지 설정
+				case KeyEvent.VK_UP : player.setUp(false); break; // 윗쪽 방향키  
+				}//end switch
+			}//keyReleased
 		});
 	}//initListner
 	
