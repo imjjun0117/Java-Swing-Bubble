@@ -41,7 +41,13 @@ public class BackgroundPlayerService implements Runnable{
 			if(leftBottomColor != -1 || rightBottomColor != -1) { //캐릭터 우측아래, 좌측아래  background 색이 흰색이 아닐 경우
 				//System.out.println("바닥 충돌");
 				player.setDown(false);// 멈춤 
-			}//end if
+			}else {
+				if(!player.isUp() && !player.isDown() ) {
+					//!player.isUp() -> up 상태가 아닐 경우만 down실행 
+					//!player.isDown() -> while로 인힌 무한 down(버그) 방지 
+					player.down();
+				}//end if
+			}//end else
 			
 			if(leftColor.getRed()==255 && leftColor.getGreen()==0 && leftColor.getBlue()==0) {
 				//System.out.println("왼쪽 벽에 충돌");

@@ -3,6 +3,7 @@ package bubble.player;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import bubble.bubble.PlayerWay;
 import bubble.service.BackgroundPlayerService;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +17,7 @@ import lombok.Setter;
 public class Player extends JLabel implements Moveable{
 
 	private final int SPEED = 4; // 플레이어 속도 상태
-	private final int JUMP_SPEED=2; // 점프 스피드
+	private final int JUMP_SPEED=4; // 점프 스피드
 	
 	private int x,y; // 캐릭터 이동 좌표
 	private ImageIcon playerR,playerL; // 캐릭터 좌,우 이미지
@@ -24,6 +25,8 @@ public class Player extends JLabel implements Moveable{
 	
 	private boolean leftWallCrash; // 왼쪽 벽에 충돌한 상태
 	private boolean rightWallCrash; // 오른쪽 벽에 충돌한 상태
+	
+	private PlayerWay playerWay;//player의 방향을 얻기위한 변수
 	
 	
 	public Player() {
@@ -35,6 +38,7 @@ public class Player extends JLabel implements Moveable{
 	@Override
 	public void left() {// x축 -10만큼 이동 왼쪽 이미지 설정(이벤트 핸들러)
 		//System.out.println("left thread 생성");
+		playerWay = PlayerWay.LEFT;//방향설정
 		left=true;
 		new Thread(()->{
 			while(left) {//왼쪽 방향은 외벽까지 무한대로 움직일 수 있음
@@ -42,7 +46,7 @@ public class Player extends JLabel implements Moveable{
 			setIcon(playerL);
 			setLocation(x,y);
 			try {
-				Thread.sleep(10);// 0.01초로 
+				Thread.sleep(8);// 0.008초로 
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}//end catch 
@@ -53,6 +57,7 @@ public class Player extends JLabel implements Moveable{
 	@Override
 	public void right() {// x축 +10만큼 이동 오른쪽 이미지 설정(이벤트 핸들러)  
 		//System.out.println("right thread 생성");
+		playerWay = PlayerWay.RIGHT;//방향설정
 		right = true;
 		new Thread(()->{
 			while(right) { // 오른쪽 방향은 외벽까지 무한대로 움직일 수 있음
@@ -60,7 +65,7 @@ public class Player extends JLabel implements Moveable{
 				setIcon(playerR);
 				setLocation(x,y);
 				try {//이동속도(연산)를 늦추기 위한 sleep
-					Thread.sleep(10);
+					Thread.sleep(8);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}//end catch
@@ -78,7 +83,7 @@ public class Player extends JLabel implements Moveable{
 				y-=JUMP_SPEED; // 점프 속도
 				setLocation(x,y);
 				try {
-					Thread.sleep(5);
+					Thread.sleep(8);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}//end catch
@@ -98,7 +103,7 @@ public class Player extends JLabel implements Moveable{
 				y+=JUMP_SPEED; // 하강 속도
 				setLocation(x,y);
 				try {
-					Thread.sleep(3);
+					Thread.sleep(8);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}//end catch

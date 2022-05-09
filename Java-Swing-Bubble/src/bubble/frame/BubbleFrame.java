@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import bubble.bubble.Bubble;
 import bubble.player.Player;
 
 /**
@@ -54,7 +55,11 @@ public class BubbleFrame extends JFrame {
 				switch(e.getKeyCode()) {
 				case KeyEvent.VK_LEFT : if(!player.isLeft() && !player.isLeftWallCrash()) player.left(); break; // 왼쪽 방향키 -> x축 -10만큼 이동 왼쪽 캐릭터이미지 설정
 				case KeyEvent.VK_RIGHT :if(!player.isRight() && !player.isRightWallCrash())player.right(); break; // 오른쪽 방향키 -> x축 +10만큼 이동 오른쪽 캐릭터이미지 설정
-				case KeyEvent.VK_UP : if(!player.isUp()&&!player.isDown())player.up(); break; // 윗쪽 방향키  
+				case KeyEvent.VK_UP : if(!player.isUp()&&!player.isDown())player.up(); break; // 윗쪽 방향키
+				case KeyEvent.VK_SPACE: 
+					Bubble bubble = new Bubble(player);
+					add(bubble);
+					break; // 스페이스바를 누를 경우 물방울 추가
 				}//end switch
 			}//keyPressed
 
