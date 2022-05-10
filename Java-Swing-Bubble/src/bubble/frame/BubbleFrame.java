@@ -10,15 +10,20 @@ import javax.swing.JLabel;
 
 import bubble.bubble.Bubble;
 import bubble.player.Player;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 버블 버블 게임 배경 설정 및 캐릭터 설정
  */
 @SuppressWarnings("serial")
+@Getter
+@Setter
 public class BubbleFrame extends JFrame {
 
 	JLabel backgroundMap;
 	Player player;
+	BubbleFrame bubbleFrame=this;//현재 객체 정보를 Bubble 객체로 전달하기 위해 선언
 	
 	public BubbleFrame() {
 		initSetting();
@@ -57,7 +62,7 @@ public class BubbleFrame extends JFrame {
 				case KeyEvent.VK_RIGHT :if(!player.isRight() && !player.isRightWallCrash())player.right(); break; // 오른쪽 방향키 -> x축 +10만큼 이동 오른쪽 캐릭터이미지 설정
 				case KeyEvent.VK_UP : if(!player.isUp()&&!player.isDown())player.up(); break; // 윗쪽 방향키
 				case KeyEvent.VK_SPACE: 
-					Bubble bubble = new Bubble(player);
+					Bubble bubble = new Bubble(bubbleFrame);//현재 객체 정보를 넘겨줌
 					add(bubble);
 					break; // 스페이스바를 누를 경우 물방울 추가
 				}//end switch
