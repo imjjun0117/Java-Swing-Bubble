@@ -62,11 +62,11 @@ public class BackgroundPlayerService implements Runnable{
 				player.setRightWallCrash(false);
 			}
 			 
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}//end catch
+//			try {
+//				Thread.sleep(10);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}//end catch
 		}//end while
 	}//run
 	

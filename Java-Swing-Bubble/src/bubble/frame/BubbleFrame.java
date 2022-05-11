@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import bubble.bubble.Bubble;
+import bubble.enemy.Enemy;
 import bubble.player.Player;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class BubbleFrame extends JFrame {
 
 	JLabel backgroundMap;
 	Player player;
+	Enemy enemy;
 	BubbleFrame mContext=this;//현재 객체 정보를 Bubble 객체로 전달하기 위해 선언
 	
 	public BubbleFrame() {
@@ -41,6 +43,8 @@ public class BubbleFrame extends JFrame {
 		setContentPane(backgroundMap);
 		player = new Player(mContext);
 		add(player);//player를 jframe에 추가 
+		enemy = new Enemy(mContext);
+		add(enemy);//적군 추가
 	}//initObject
 	
 	/**
@@ -75,7 +79,7 @@ public class BubbleFrame extends JFrame {
 				switch(e.getKeyCode()) {
 				case KeyEvent.VK_LEFT : player.setLeft(false); break; // 왼쪽 방향키 -> x축 -10만큼 이동 왼쪽 캐릭터이미지 설정
 				case KeyEvent.VK_RIGHT :player.setRight(false); break; // 오른쪽 방향키 -> x축 +10만큼 이동 오른쪽 캐릭터이미지 설정
-				case KeyEvent.VK_UP : player.setUp(false); break; // 윗쪽 방향키  
+				case KeyEvent.VK_UP : break; // 윗쪽 방향키  
 				}//end switch
 			}//keyReleased
 		});

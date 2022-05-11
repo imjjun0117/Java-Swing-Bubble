@@ -3,6 +3,7 @@ package bubble.bubble;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import bubble.enemy.Enemy;
 import bubble.frame.BubbleFrame;
 import bubble.move.Moveable;
 import bubble.player.Player;
@@ -24,15 +25,18 @@ public class Bubble extends JLabel implements Moveable{
 	
 	private Player player; // player의 좌표를 얻기위해 생성
 	
-	private BubbleFrame bubbleFrame; // 모든 자바 프로그램 main 메소드가 존재하는 클래스에는 프로젝트 모든 객체 정보를 얻을 수 있다
+	private Enemy enemy; // 물방울이 적군의  정보를 얻어서 의존관계 성립
+	
+	private BubbleFrame mContext; // 모든 자바 프로그램 main 메소드가 존재하는 클래스에는 프로젝트 모든 객체 정보를 얻을 수 있다
 	//버블 2초 후 소멸하기 위해서는 프레임 자체를 repaint하는 작업이 필요
 	
 	//적군을 맞춘 상태
 	private int state; // 0(물방울), 1(적을 가둔 물방울)
 	
-	public Bubble(BubbleFrame bubbleFrame) {//bubbleFrame를 받으면 player 객체에 대한 정보도 얻을 수 있음
-		this.bubbleFrame = bubbleFrame;
-		this.player = bubbleFrame.getPlayer();//getter를 통해 받는다.
+	public Bubble(BubbleFrame mContext) {//bubbleFrame를 받으면 player 객체에 대한 정보도 얻을 수 있음
+		this.mContext = mContext;
+		this.player = mContext.getPlayer();//getter를 통해 받는다.
+		this.enemy = mContext.getEnemy();
 		
 		backgroundBubbleService = new BackgroundBubbleService(this);
 		initObject();
@@ -84,6 +88,13 @@ public class Bubble extends JLabel implements Moveable{
 			if(backgroundBubbleService.leftWall()) {
 				break; // 왼쪽 벽에 충돌했을 경우 for문을 종료
 			}//end if
+			if(Math.abs(x-enemy.getX())<10 &&(Math.abs(y-enemy.getY())>0 && Math.abs(y-enemy.getY())<50)) { // 적군의 좌표를 얻어와 차를 통해 충돌상태를 얻어낸다
+				if(enemy.getState()==0) { 
+				//? 적군을 메모리에서 삭제해도 가비지 컬렉터에 남아있을 경우 실행되기 때문에 적군이 물방울에 안맞은 경우만 실행
+				attackBubble();
+				break;
+				}//end if
+			}//end if
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
@@ -120,12 +131,20 @@ public class Bubble extends JLabel implements Moveable{
 				break; // 위쪽 벽에 충돌했을 경우 for문을 종료
 			}
 			try {
-				Thread.sleep(1);
+			if(state==1) {//적을 가둔 물방울일 경우 무거운 효과를 위해 sleep을 길게 준다
+				Thread.sleep(10);
+			}else {
+				Thread.sleep(1);//기본 상태
+			}//ene else
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}//end while
-		clearBubble();
+		if(state==0) {
+			//적을 가두지 않은 상태에서만 소멸
+			clearBubble();
+		}// end if
+		
 	}//up
 	
 	private void clearBubble() {
@@ -134,11 +153,22 @@ public class Bubble extends JLabel implements Moveable{
 			Thread.sleep(3000);//물방울은 3초간 생존
 			setIcon(bomb);//터지는 이미지로 변경
 			Thread.sleep(500);//0.5초 간 유지
-			bubbleFrame.remove(this);//현재 객체(컴포넌트)를 메모리에서 지운다
-			bubbleFrame.repaint();//메모리에 남아있는 객체들을 다시 그린다.
+			mContext.remove(this);//현재 객체(컴포넌트)를 메모리에서 지운다
+			mContext.repaint();//메모리에 남아있는 객체들을 다시 그린다.
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}//end catch
 	}//clearBubble
+	
+	/**
+	 * 적군이 물방울을 맞았을때 이미지 변동 
+	 */
+	public void attackBubble() {
+		state=1; // 적을 가둔 상태
+		enemy.setState(1);//적군 물방울 맞은 상태
+		setIcon(bubbled); //적을 가둔 이미지
+		mContext.remove(enemy); // 적 소멸
+		mContext.repaint(); // 리페인팅
+	}//attackBubble
 	
 }//class
