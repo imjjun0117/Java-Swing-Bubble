@@ -3,7 +3,10 @@ package bubble.player;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import bubble.bubble.Bubble;
 import bubble.bubble.PlayerWay;
+import bubble.frame.BubbleFrame;
+import bubble.move.Moveable;
 import bubble.service.BackgroundPlayerService;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +22,8 @@ public class Player extends JLabel implements Moveable{
 	private final int SPEED = 4; // 플레이어 속도 상태
 	private final int JUMP_SPEED=4; // 점프 스피드
 	
+	private BubbleFrame mContext;// 물방울 객체 생성을 위해 선언
+	
 	private int x,y; // 캐릭터 이동 좌표
 	private ImageIcon playerR,playerL; // 캐릭터 좌,우 이미지
 	private boolean left,right,up,down; // 움직임 상태
@@ -29,11 +34,29 @@ public class Player extends JLabel implements Moveable{
 	private PlayerWay playerWay;//player의 방향을 얻기위한 변수
 	
 	
-	public Player() {
+	public Player(BubbleFrame mContext) { // Bubble의 정보를 얻기 위해 mContext를 받는다.
+		this.mContext = mContext; 
 		initObject();
 		initSetting();
 		initBackgroundPlayerService();
 	}//Player
+	
+	/**
+	 * 플레이어가 물방울을 발사하는 일을 하는 method 
+	 */
+	@Override
+	public void attack() {
+		new Thread(()->{
+			Bubble bubble = new Bubble(mContext);
+			mContext.add(bubble);
+			if(playerWay == PlayerWay.LEFT) { // 플레이어가 왼쪽을 본 상태일 경우
+				bubble.left();// 왼쪽으로 발사!
+			}else { // 플레이어가 오른쪽을 본 상태
+				bubble.right();//오른쪽 발사!
+			}//end else
+			bubble.up();
+		}).start();
+	}//attack
 	
 	@Override
 	public void left() {// x축 -10만큼 이동 왼쪽 이미지 설정(이벤트 핸들러)
@@ -81,6 +104,7 @@ public class Player extends JLabel implements Moveable{
 			//점프는 무한대로 이동할 수 없어 for문을 이용
 			for(int i = 0; i < 130/JUMP_SPEED; i++) { //점프 높이를 맞추기 위해 JUMP_SPEED를 나눠준다
 				y-=JUMP_SPEED; // 점프 속도
+				System.out.println(y);
 				setLocation(x,y);
 				try {
 					Thread.sleep(8);
@@ -128,5 +152,8 @@ public class Player extends JLabel implements Moveable{
 	private void initBackgroundPlayerService() {
 		new Thread(new BackgroundPlayerService(this)).start();
 	}//initBackgroundPlayerService
+
+
+	
 	
 }//class

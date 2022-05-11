@@ -36,7 +36,7 @@ public class BackgroundPlayerService implements Runnable{
 			Color rightColor = new Color(image.getRGB(player.getX()+65, player.getY()+25));//캐릭터 기준 오른쪽 RGB
 			
 			int leftBottomColor = image.getRGB(player.getX()+10, player.getY()+55); // 좌측 아래 bottom 흰색일 경우 -1
-			int rightBottomColor = image.getRGB(player.getX()+55, player.getY()+55); // 우측 아래 bottom 흰색일 경우 -1
+			int rightBottomColor = image.getRGB(player.getX()+40, player.getY()+55); // 우측 아래 bottom 흰색일 경우 -1
 			
 			if(leftBottomColor != -1 || rightBottomColor != -1) { //캐릭터 우측아래, 좌측아래  background 색이 흰색이 아닐 경우
 				//System.out.println("바닥 충돌");

@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import bubble.frame.BubbleFrame;
-import bubble.player.Moveable;
+import bubble.move.Moveable;
 import bubble.player.Player;
 import bubble.service.BackgroundBubbleService;
 import lombok.Getter;
@@ -37,7 +37,6 @@ public class Bubble extends JLabel implements Moveable{
 		backgroundBubbleService = new BackgroundBubbleService(this);
 		initObject();
 		initSetting();
-		initThread();
 	}//Bubble
 	
 	public void initObject() {
@@ -61,19 +60,20 @@ public class Bubble extends JLabel implements Moveable{
 		state=0;//기본 물방울
 	}//initSetting
 
-	public void initThread() {//물방울은 움직임이 일관(?)되어 스레드를 통합하여 생성
-		new Thread(()->{
-			if(player.getPlayerWay()==PlayerWay.RIGHT) {
-				//플레이어의 방향이 오른쪽일때
-				right();
-			}else {
-				//플레이어의 방향이 왼쪽일때
-				left();
-			}//end else
-			up(); //제한된 거리 이동 후 하늘로 날라간다.
-		}).start();
-		
-	}//initThread
+// thread는 player 객체에서 처리 
+//	public void initThread() {//물방울은 움직임이 일관(?)되어 스레드를 통합하여 생성
+//		new Thread(()->{
+//			if(player.getPlayerWay()==PlayerWay.RIGHT) {
+//				//플레이어의 방향이 오른쪽일때
+//				right();
+//			}else {
+//				//플레이어의 방향이 왼쪽일때
+//				left();
+//			}//end else
+//			up(); //제한된 거리 이동 후 하늘로 날라간다.
+//		}).start();
+//		
+//	}//initThread
 	
 	@Override
 	public void left() {
