@@ -103,7 +103,6 @@ public class Player extends JLabel implements Moveable{
 			//점프는 무한대로 이동할 수 없어 for문을 이용
 			for(int i = 0; i < 130/JUMP_SPEED; i++) { //점프 높이를 맞추기 위해 JUMP_SPEED를 나눠준다
 				y-=JUMP_SPEED; // 점프 속도
-				System.out.println(y);
 				setLocation(x,y);
 				try {
 					Thread.sleep(8);

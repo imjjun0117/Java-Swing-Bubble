@@ -7,6 +7,7 @@ import bubble.bubble.Bubble;
 import bubble.frame.BubbleFrame;
 import bubble.move.Moveable;
 import bubble.player.PlayerWay;
+import bubble.service.BackgroundEnemyService;
 import bubble.service.BackgroundPlayerService;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,7 +41,8 @@ public class Enemy extends JLabel implements Moveable{
 		this.mContext = mContext; 
 		initObject();
 		initSetting();
-//		initBackgroundEnemyService();
+		initBackgroundEnemyService();
+		right();
 	}//Player
 	
 	
@@ -55,7 +57,7 @@ public class Enemy extends JLabel implements Moveable{
 			setIcon(enemyL);
 			setLocation(x,y);
 			try {
-				Thread.sleep(8);// 0.008초로 
+				Thread.sleep(15);// 0.012초로 
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}//end catch 
@@ -74,7 +76,7 @@ public class Enemy extends JLabel implements Moveable{
 				setIcon(enemyR);
 				setLocation(x,y);
 				try {//이동속도(연산)를 늦추기 위한 sleep
-					Thread.sleep(8);
+					Thread.sleep(15);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}//end catch
@@ -135,9 +137,9 @@ public class Enemy extends JLabel implements Moveable{
 		enemyL = new ImageIcon("image/enemyL.png");
 	}//initObject
 	
-//	private void initBackgroundEnemyService() {
-//		new Thread(new BackgroundEnemyService(this)).start();
-//	}//initBackgroundEnemyService
+	private void initBackgroundEnemyService() {
+		new Thread(new BackgroundEnemyService(this)).start();
+	}//initBackgroundEnemyService
 
 
 	

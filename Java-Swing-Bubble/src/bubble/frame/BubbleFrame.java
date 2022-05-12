@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import bubble.bgm.BGM;
 import bubble.bubble.Bubble;
 import bubble.enemy.Enemy;
 import bubble.player.Player;
@@ -31,6 +32,7 @@ public class BubbleFrame extends JFrame {
 		initSetting();
 		initObject();
 		initListner();
+		new BGM();
 		setVisible(true);
 	}//BubbleFrame
 	
