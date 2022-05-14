@@ -1,4 +1,4 @@
-package bubble.frame;
+package bubble.game;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -9,9 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import bubble.bgm.BGM;
-import bubble.bubble.Bubble;
-import bubble.enemy.Enemy;
-import bubble.player.Player;
+import bubble.game.component.Bubble;
+import bubble.game.component.Enemy;
+import bubble.game.component.Player;
 import lombok.Getter;
 import lombok.Setter;
 

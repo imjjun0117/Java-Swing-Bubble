@@ -1,4 +1,4 @@
-package bubble.move;
+package bubble.game;
 
 /**
  * 캐릭터 방향을 설정하기 위해 인터페이스 생성

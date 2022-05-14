@@ -1,13 +1,11 @@
-package bubble.bubble;
+package bubble.game.component;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import bubble.enemy.Enemy;
-import bubble.frame.BubbleFrame;
-import bubble.move.Moveable;
-import bubble.player.Player;
-import bubble.service.BackgroundBubbleService;
+import bubble.game.BubbleFrame;
+import bubble.game.Moveable;
+import bubble.game.service.BackgroundBubbleService;
 import lombok.Getter;
 import lombok.Setter;
 

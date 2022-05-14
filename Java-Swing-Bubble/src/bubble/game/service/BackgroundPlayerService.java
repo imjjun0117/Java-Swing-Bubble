@@ -1,4 +1,4 @@
-package bubble.service;
+package bubble.game.service;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import bubble.player.Player;
+import bubble.game.component.Player;
 
 /**
  * 백그라운드 충돌 감지 클래스(색을 통해서)

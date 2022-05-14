@@ -1,12 +1,12 @@
-package bubble.player;
+package bubble.game.component;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import bubble.bubble.Bubble;
-import bubble.frame.BubbleFrame;
-import bubble.move.Moveable;
-import bubble.service.BackgroundPlayerService;
+import bubble.game.BubbleFrame;
+import bubble.game.Moveable;
+import bubble.game.service.BackgroundPlayerService;
+import bubble.game.state.PlayerWay;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,7 +32,6 @@ public class Player extends JLabel implements Moveable{
 	
 	private PlayerWay playerWay;//player의 방향을 얻기위한 변수
 	
-	
 	public Player(BubbleFrame mContext) { // Bubble의 정보를 얻기 위해 mContext를 받는다.
 		this.mContext = mContext; 
 		initObject();
@@ -56,6 +55,7 @@ public class Player extends JLabel implements Moveable{
 			bubble.up();
 		}).start();
 	}//attack
+	
 	
 	@Override
 	public void left() {// x축 -10만큼 이동 왼쪽 이미지 설정(이벤트 핸들러)
