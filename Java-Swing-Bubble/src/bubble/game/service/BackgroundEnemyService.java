@@ -41,10 +41,8 @@ public class BackgroundEnemyService implements Runnable{
 			
 			if(leftBottomColor != -1 || rightBottomColor != -1) { //캐릭터 우측아래, 좌측아래  background 색이 흰색이 아닐 경우
 				enemy.setDown(false);// 멈춤 
-			}else {
-				if(!enemy.isUp() && !enemy.isDown() ) {
+			}else if(!enemy.isUp() && !enemy.isDown() ) {
 					enemy.down();
-				}//end if
 			}//end else
 			
 			if(leftColor.getRed()==255 && leftColor.getGreen()==0 && leftColor.getBlue()==0) {

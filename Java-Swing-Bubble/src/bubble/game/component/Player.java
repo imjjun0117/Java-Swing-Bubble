@@ -56,7 +56,6 @@ public class Player extends JLabel implements Moveable{
 		}).start();
 	}//attack
 	
-	
 	@Override
 	public void left() {// x축 -10만큼 이동 왼쪽 이미지 설정(이벤트 핸들러)
 		//System.out.println("left thread 생성");

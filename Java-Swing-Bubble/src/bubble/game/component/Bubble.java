@@ -111,6 +111,13 @@ public class Bubble extends JLabel implements Moveable{
 			if(backgroundBubbleService.rightWall()) {
 				break; // 오른쪽 벽에 충돌했을 경우 for문을 종료
 			}//end if
+			if(Math.abs(x-enemy.getX())<10 &&(Math.abs(y-enemy.getY())>0 && Math.abs(y-enemy.getY())<50)) { // 적군의 좌표를 얻어와 차를 통해 충돌상태를 얻어낸다
+				if(enemy.getState()==0) { 
+				//? 적군을 메모리에서 삭제해도 가비지 컬렉터에 남아있을 경우 실행되기 때문에 적군이 물방울에 안맞은 경우만 실행
+				attackBubble();
+				break;
+				}//end if
+			}//end if
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
@@ -126,7 +133,7 @@ public class Bubble extends JLabel implements Moveable{
 			y--;
 			setLocation(x, y);
 			if(backgroundBubbleService.upWall()) {
-				break; // 위쪽 벽에 충돌했을 경우 for문을 종료
+				break; // 위쪽 벽에 충돌했을 경우 while문을 종료
 			}
 			try {
 			if(state==1) {//적을 가둔 물방울일 경우 무거운 효과를 위해 sleep을 길게 준다
@@ -141,7 +148,9 @@ public class Bubble extends JLabel implements Moveable{
 		if(state==0) {
 			//적을 가두지 않은 상태에서만 소멸
 			clearBubble();
-		}// end if
+		}else {
+			touchBubble();
+		}
 		
 	}//up
 	
@@ -169,4 +178,23 @@ public class Bubble extends JLabel implements Moveable{
 		mContext.repaint(); // 리페인팅
 	}//attackBubble
 	
+	
+	public void touchBubble() {
+		new Thread(()->{
+			boolean touched = true;
+		while(touched) {
+			if(Math.abs(player.getX()-x)<10&&Math.abs(player.getY()-y)>0&&Math.abs(player.getY()-y)<50) {
+				setIcon(bomb);
+				try {
+					Thread.sleep(500);
+					mContext.remove(this);
+					mContext.repaint();
+					touched=false;
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}//end catch
+			}//end if
+		}
+		}).start();
+	}//touchBubble
 }//class
