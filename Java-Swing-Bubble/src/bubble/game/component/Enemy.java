@@ -19,7 +19,7 @@ import lombok.Setter;
 public class Enemy extends JLabel implements Moveable{
 
 	private final int SPEED = 4; // 적군 속도 상태
-	private final int JUMP_SPEED=4; // 점프 스피드
+	private final int JUMP_SPEED=2; // 점프 스피드
 	
 	private BubbleFrame mContext;// 물방울 객체 생성을 위해 선언
 	
@@ -87,10 +87,12 @@ public class Enemy extends JLabel implements Moveable{
 		//System.out.println("up");
 		up=true;
 		new Thread(()->{
+//			left=false;
+//			right=false;
 			//점프는 무한대로 이동할 수 없어 for문을 이용
-			for(int i = 0; i < 130/JUMP_SPEED; i++) { //점프 높이를 맞추기 위해 JUMP_SPEED를 나눠준다
+			for(int i = 0; i < 400/JUMP_SPEED; i++) { //점프 높이를 맞추기 위해 JUMP_SPEED를 나눠준다
 				y-=JUMP_SPEED; // 점프 속도
-				System.out.println(y);
+//				System.out.println(x+" / "+y);
 				setLocation(x,y);
 				try {
 					Thread.sleep(8);

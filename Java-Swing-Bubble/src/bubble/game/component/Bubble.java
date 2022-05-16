@@ -150,7 +150,7 @@ public class Bubble extends JLabel implements Moveable{
 			clearBubble();
 		}else {
 			touchBubble();
-		}
+		}//end else
 		
 	}//up
 	
@@ -179,17 +179,17 @@ public class Bubble extends JLabel implements Moveable{
 	}//attackBubble
 	
 	
-	public void touchBubble() {
+	public void touchBubble() {//¹°Ç³¼± ÅÍÄ¡ ½Ã ÅÍÁü ->syso¸¦ »©¸é ½ÇÇà¾ÈµÊ..
 		new Thread(()->{
-			boolean touched = true;
-		while(touched) {
-			if(Math.abs(player.getX()-x)<10&&Math.abs(player.getY()-y)>0&&Math.abs(player.getY()-y)<50) {
+		while(true) {
+			System.out.println("½ÇÇà");
+			if(Math.abs(player.getX()-x)<20 && Math.abs(player.getY()-y)>0 && Math.abs(player.getY()-y)<60) {
 				setIcon(bomb);
 				try {
 					Thread.sleep(500);
 					mContext.remove(this);
 					mContext.repaint();
-					touched=false;
+					break;
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}//end catch

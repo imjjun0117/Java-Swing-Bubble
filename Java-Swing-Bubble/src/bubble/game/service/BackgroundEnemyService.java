@@ -56,8 +56,14 @@ public class BackgroundEnemyService implements Runnable{
 				enemy.setRight(false);
 				if(!enemy.isLeft()) {//버그대비
 					enemy.left();//벽에 충돌했을 경우 반대 방향으로
-				}
+				}//end if
 			}
+			 if (enemy.getLocation().getY() >= 530 && (enemy.getLocation().getX() <= 75 || enemy.getLocation().getX() >= 875) ) {
+
+                if (!enemy.isUp()) {
+                    enemy.up();
+                }
+            }
 			 
 //			try {
 //				Thread.sleep(10);
