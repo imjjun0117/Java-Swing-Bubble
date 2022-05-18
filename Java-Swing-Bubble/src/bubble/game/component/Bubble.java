@@ -1,5 +1,7 @@
 package bubble.game.component;
 
+import java.util.List;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -23,7 +25,7 @@ public class Bubble extends JLabel implements Moveable{
 	
 	private Player player; // player의 좌표를 얻기위해 생성
 	
-	private Enemy enemy; // 물방울이 적군의  정보를 얻어서 의존관계 성립
+	List<Enemy> enemies; // 물방울이 적군의  정보를 얻어서 의존관계 성립
 	
 	private BubbleFrame mContext; // 모든 자바 프로그램 main 메소드가 존재하는 클래스에는 프로젝트 모든 객체 정보를 얻을 수 있다
 	//버블 2초 후 소멸하기 위해서는 프레임 자체를 repaint하는 작업이 필요
@@ -34,7 +36,7 @@ public class Bubble extends JLabel implements Moveable{
 	public Bubble(BubbleFrame mContext) {//bubbleFrame를 받으면 player 객체에 대한 정보도 얻을 수 있음
 		this.mContext = mContext;
 		this.player = mContext.getPlayer();//getter를 통해 받는다.
-		this.enemy = mContext.getEnemy();
+		this.enemies = mContext.getEnemies();
 		
 		backgroundBubbleService = new BackgroundBubbleService(this);
 		initObject();
@@ -86,20 +88,22 @@ public class Bubble extends JLabel implements Moveable{
 			if(backgroundBubbleService.leftWall()) {
 				break; // 왼쪽 벽에 충돌했을 경우 for문을 종료
 			}//end if
-			if(Math.abs(x-enemy.getX())<10 &&(Math.abs(y-enemy.getY())>0 && Math.abs(y-enemy.getY())<50)) { // 적군의 좌표를 얻어와 차를 통해 충돌상태를 얻어낸다
-				if(enemy.getState()==0) { 
+			for(int j = 0; j < enemies.size(); j++) { // list를 통해 모든 적군 정보를 얻는다
+			if(Math.abs(x-enemies.get(j).getX())<10 &&(Math.abs(y-enemies.get(j).getY())>0 && Math.abs(y-enemies.get(j).getY())<50)) { // 적군의 좌표를 얻어와 차를 통해 충돌상태를 얻어낸다
+				if(enemies.get(j).getState()==0) { 
 				//? 적군을 메모리에서 삭제해도 가비지 컬렉터에 남아있을 경우 실행되기 때문에 적군이 물방울에 안맞은 경우만 실행
-				attackBubble();
+				attackBubble(j);
 				break;
 				}//end if
 			}//end if
+			}//end for
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}//end for
-		
+	 	
 	}//left
 
 	@Override
@@ -111,13 +115,15 @@ public class Bubble extends JLabel implements Moveable{
 			if(backgroundBubbleService.rightWall()) {
 				break; // 오른쪽 벽에 충돌했을 경우 for문을 종료
 			}//end if
-			if(Math.abs(x-enemy.getX())<10 &&(Math.abs(y-enemy.getY())>0 && Math.abs(y-enemy.getY())<50)) { // 적군의 좌표를 얻어와 차를 통해 충돌상태를 얻어낸다
-				if(enemy.getState()==0) { 
-				//? 적군을 메모리에서 삭제해도 가비지 컬렉터에 남아있을 경우 실행되기 때문에 적군이 물방울에 안맞은 경우만 실행
-				attackBubble();
-				break;
+			for(int j = 0; j < enemies.size(); j++) { // 다수의 적군 비교를 위한 for문
+				if(Math.abs(x-enemies.get(j).getX())<10 &&(Math.abs(y-enemies.get(j).getY())>0 && Math.abs(y-enemies.get(j).getY())<50)) { // 적군의 좌표를 얻어와 차를 통해 충돌상태를 얻어낸다
+					if(enemies.get(j).getState()==0) { 
+					//? 적군을 메모리에서 삭제해도 가비지 컬렉터에 남아있을 경우 실행되기 때문에 적군이 물방울에 안맞은 경우만 실행
+					attackBubble(j);
+					break;
+					}//end if
 				}//end if
-			}//end if
+			}//end for
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
@@ -170,11 +176,11 @@ public class Bubble extends JLabel implements Moveable{
 	/**
 	 * 적군이 물방울을 맞았을때 이미지 변동 
 	 */
-	public void attackBubble() {
+	public void attackBubble(int enemyIdx) { // 물방울을 맞은 적군의 인덱스를 받아와 메소드 처리
 		state=1; // 적을 가둔 상태
-		enemy.setState(1);//적군 물방울 맞은 상태
+		enemies.get(enemyIdx).setState(1);//적군 물방울 맞은 상태
 		setIcon(bubbled); //적을 가둔 이미지
-		mContext.remove(enemy); // 적 소멸
+		mContext.remove(enemies.get(enemyIdx)); // 적 소멸
 		mContext.repaint(); // 리페인팅
 	}//attackBubble
 	

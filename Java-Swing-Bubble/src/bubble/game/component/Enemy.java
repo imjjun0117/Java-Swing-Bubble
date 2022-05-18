@@ -35,8 +35,10 @@ public class Enemy extends JLabel implements Moveable{
 	private EnemyWay enemyWay;//적군의 방향을 얻기위한 변수
 	
 	
-	public Enemy(BubbleFrame mContext) { // Bubble의 정보를 얻기 위해 mContext를 받는다.
+	public Enemy(BubbleFrame mContext,int x, int y) { // Bubble의 정보를 얻기 위해 mContext를 받는다.
 		this.mContext = mContext; 
+		this.x=x;
+		this.y=y;
 		initObject();
 		initSetting();
 		initBackgroundEnemyService();
@@ -125,8 +127,8 @@ public class Enemy extends JLabel implements Moveable{
 	}//down
 
 	public void initSetting() {
-		x = 480;
-		y = 178;//시작 위치 
+//		x = 480;
+//		y = 178;//시작 위치 
 		setIcon(enemyR);// 우측 캐릭터 이미지 
 		setBounds(x,y,50,50);
 	

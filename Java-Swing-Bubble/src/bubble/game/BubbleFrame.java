@@ -3,6 +3,8 @@ package bubble.game;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.security.Key;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -25,14 +27,15 @@ public class BubbleFrame extends JFrame {
 
 	JLabel backgroundMap;
 	Player player;
+	List<Enemy> enemies;
 	Enemy enemy;
 	BubbleFrame mContext=this;//현재 객체 정보를 Bubble 객체로 전달하기 위해 선언
 	
 	public BubbleFrame() {
 		initSetting();
-		initObject();
 		initListner();
 		new BGM();
+		initObject();
 		setVisible(true);
 	}//BubbleFrame
 	
@@ -45,8 +48,9 @@ public class BubbleFrame extends JFrame {
 		setContentPane(backgroundMap);
 		player = new Player(mContext);
 		add(player);//player를 jframe에 추가 
-		enemy = new Enemy(mContext);
-		add(enemy);//적군 추가
+//		enemy = new Enemy(mContext);
+//		add(enemy);//적군 추가
+		createEnemies();
 	}//initObject
 	
 	/**
@@ -58,6 +62,14 @@ public class BubbleFrame extends JFrame {
 		setLocationRelativeTo(null); //jframe을 가운데 배치
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}//initSetting
+	
+	public void createEnemies() { // 적군 두마리 생성 -> 위치 변경하여
+		enemies = new ArrayList<>();
+		enemies.add(new Enemy(mContext,100,178));
+		add(enemies.get(0));
+		enemies.add(new Enemy(mContext,900,250));
+		add(enemies.get(1));
+	}//createEnemies
 	
 	public void initListner() {
 		addKeyListener(new KeyAdapter() {
