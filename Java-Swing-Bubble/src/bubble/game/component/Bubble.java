@@ -25,7 +25,7 @@ public class Bubble extends JLabel implements Moveable{
 	
 	private Player player; // player의 좌표를 얻기위해 생성
 	
-	List<Enemy> enemies; // 물방울이 적군의  정보를 얻어서 의존관계 성립
+	private List<Enemy> enemies; // 물방울이 적군의  정보를 얻어서 의존관계 성립
 	
 	private BubbleFrame mContext; // 모든 자바 프로그램 main 메소드가 존재하는 클래스에는 프로젝트 모든 객체 정보를 얻을 수 있다
 	//버블 2초 후 소멸하기 위해서는 프레임 자체를 repaint하는 작업이 필요

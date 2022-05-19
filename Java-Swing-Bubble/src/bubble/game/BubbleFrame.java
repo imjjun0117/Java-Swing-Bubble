@@ -46,11 +46,11 @@ public class BubbleFrame extends JFrame {
 	public void initObject() {
 		backgroundMap = new JLabel(new ImageIcon("image/backgroundMap.png"));
 		setContentPane(backgroundMap);
+		createEnemies();
 		player = new Player(mContext);
 		add(player);//player를 jframe에 추가 
 //		enemy = new Enemy(mContext);
 //		add(enemy);//적군 추가
-		createEnemies();
 	}//initObject
 	
 	/**
