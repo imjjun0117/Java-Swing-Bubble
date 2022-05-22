@@ -19,6 +19,8 @@ public class Bubble extends JLabel implements Moveable{
 	
 	private boolean left,right,up; // 움직임 상태
 	
+	private boolean touched;
+	
 	private BackgroundBubbleService backgroundBubbleService;//물방울의 충돌 상태를 감지하기 위해
 
 	private ImageIcon bubble,bubbled,bomb; // 일반물방울, 적을 가둔 물방울, 물방울터짐
@@ -142,14 +144,14 @@ public class Bubble extends JLabel implements Moveable{
 				break; // 위쪽 벽에 충돌했을 경우 while문을 종료
 			}
 			try {
-			if(state==1) {//적을 가둔 물방울일 경우 무거운 효과를 위해 sleep을 길게 준다
-				Thread.sleep(10);
-			}else {
-				Thread.sleep(1);//기본 상태
-			}//ene else
+				if(state==1) {//적을 가둔 물방울일 경우 무거운 효과를 위해 sleep을 길게 준다
+					Thread.sleep(10);
+				}else {
+					Thread.sleep(1);//기본 상태
+				}//end else
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-			}
+			}//end catch
 		}//end while
 		if(state==0) {
 			//적을 가두지 않은 상태에서만 소멸
@@ -185,22 +187,21 @@ public class Bubble extends JLabel implements Moveable{
 	}//attackBubble
 	
 	
-	public void touchBubble() {//물풍선 터치 시 터짐 ->syso를 빼면 실행안됨..
-		new Thread(()->{
-		while(true) {
-			System.out.println("실행");
-			if(Math.abs(player.getX()-x)<20 && Math.abs(player.getY()-y)>0 && Math.abs(player.getY()-y)<60) {
-				setIcon(bomb);
-				try {
-					Thread.sleep(500);
-					mContext.remove(this);
-					mContext.repaint();
-					break;
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}//end catch
-			}//end if
+	public void touchBubble() {//물풍선 터치 시 터짐 ->syso를 빼면 실행안됨..해결
+		touched = true;
+		while(touched) {
+			try {
+				if(Math.abs(player.getX()-x)<20 && Math.abs(player.getY()-y)>0 && Math.abs(player.getY()-y)<60) {
+					setIcon(bomb);
+						Thread.sleep(500);
+						mContext.remove(this);
+						mContext.repaint();
+						touched =false;
+				}//end if
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}//end catch
 		}
-		}).start();
 	}//touchBubble
 }//class

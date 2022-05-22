@@ -25,11 +25,11 @@ import lombok.Setter;
 @Setter
 public class BubbleFrame extends JFrame {
 
-	JLabel backgroundMap;
-	Player player;
-	List<Enemy> enemies;
-	Enemy enemy;
-	BubbleFrame mContext=this;//현재 객체 정보를 Bubble 객체로 전달하기 위해 선언
+	private JLabel backgroundMap;
+	private Player player;
+	private List<Enemy> enemies;
+	private Enemy enemy;
+	private BubbleFrame mContext=this;//현재 객체 정보를 Bubble 객체로 전달하기 위해 선언
 	
 	public BubbleFrame() {
 		initSetting();
@@ -46,8 +46,8 @@ public class BubbleFrame extends JFrame {
 	public void initObject() {
 		backgroundMap = new JLabel(new ImageIcon("image/backgroundMap.png"));
 		setContentPane(backgroundMap);
-		createEnemies();
 		player = new Player(mContext);
+		createEnemies();
 		add(player);//player를 jframe에 추가 
 //		enemy = new Enemy(mContext);
 //		add(enemy);//적군 추가
@@ -67,7 +67,7 @@ public class BubbleFrame extends JFrame {
 		enemies = new ArrayList<>();
 		enemies.add(new Enemy(mContext,100,178));
 		add(enemies.get(0));
-		enemies.add(new Enemy(mContext,900,250));
+		enemies.add(new Enemy(mContext,870,290));
 		add(enemies.get(1));
 	}//createEnemies
 	

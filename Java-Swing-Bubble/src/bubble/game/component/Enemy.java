@@ -23,6 +23,8 @@ public class Enemy extends JLabel implements Moveable{
 	
 	private BubbleFrame mContext;// 물방울 객체 생성을 위해 선언
 	
+	private Player player; // 적군이 플레이어를 잡는다
+	
 	private int state; // 적군의 상태 0(기본) 1(물방울 맞은 상태)
 	
 	private int x,y; // 캐릭터 이동 좌표
@@ -37,6 +39,7 @@ public class Enemy extends JLabel implements Moveable{
 	
 	public Enemy(BubbleFrame mContext,int x, int y) { // Bubble의 정보를 얻기 위해 mContext를 받는다.
 		this.mContext = mContext; 
+		this.player = mContext.getPlayer();
 		this.x=x;
 		this.y=y;
 		initObject();
@@ -53,6 +56,10 @@ public class Enemy extends JLabel implements Moveable{
 		left=true;
 		new Thread(()->{
 			while(left) {//왼쪽 방향은 외벽까지 무한대로 움직일 수 있음
+					if(Math.abs(x-player.getX())<10 &&(Math.abs(y-player.getY())>0 && Math.abs(y-player.getY())<50)&&state==0) { //플레이어와 접촉시
+						mContext.remove(player);
+						mContext.repaint();
+					}//end if
 			x-=SPEED;
 			setIcon(enemyL);
 			setLocation(x,y);
@@ -72,6 +79,10 @@ public class Enemy extends JLabel implements Moveable{
 		right = true;
 		new Thread(()->{
 			while(right) { // 오른쪽 방향은 외벽까지 무한대로 움직일 수 있음
+				if(Math.abs(x-player.getX())<10 &&(Math.abs(y-player.getY())>0 && Math.abs(y-player.getY())<50)&&state==0) { //플레이어와 접촉시
+					mContext.remove(player);
+					mContext.repaint();
+				}//end if
 				x+=SPEED;
 				setIcon(enemyR);
 				setLocation(x,y);
@@ -93,6 +104,10 @@ public class Enemy extends JLabel implements Moveable{
 //			right=false;
 			//점프는 무한대로 이동할 수 없어 for문을 이용
 			for(int i = 0; i < 400/JUMP_SPEED; i++) { //점프 높이를 맞추기 위해 JUMP_SPEED를 나눠준다
+				if(Math.abs(x-player.getX())<10 &&(Math.abs(y-player.getY())>0 && Math.abs(y-player.getY())<50)&&state==0) { //플레이어와 접촉시
+					mContext.remove(player);
+					mContext.repaint();
+				}//end if
 				y-=JUMP_SPEED; // 점프 속도
 //				System.out.println(x+" / "+y);
 				setLocation(x,y);
@@ -114,6 +129,10 @@ public class Enemy extends JLabel implements Moveable{
 		new Thread(()->{
 			//점프를 하고 하강
 			while(down) {// 떨어짐을 제어하기 위해 for문이 아닌 while문을 사용 
+				if(Math.abs(x-player.getX())<10 &&(Math.abs(y-player.getY())>0 && Math.abs(y-player.getY())<50)&&state==0) { //플레이어와 접촉시
+					mContext.remove(player);
+					mContext.repaint();
+				}//end if
 				y+=JUMP_SPEED; // 하강 속도
 				setLocation(x,y);
 				try {

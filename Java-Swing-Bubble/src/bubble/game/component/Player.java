@@ -24,7 +24,6 @@ public class Player extends JLabel implements Moveable{
 	private final int JUMP_SPEED=4; // 점프 스피드
 	
 	private BubbleFrame mContext;// 물방울 객체 생성을 위해 선언
-	private List<Enemy> enemies; // 적군과 접촉시 플레이어 사망
 	
 	private int x,y; // 캐릭터 이동 좌표
 	private ImageIcon playerR,playerL; // 캐릭터 좌,우 이미지
@@ -37,10 +36,8 @@ public class Player extends JLabel implements Moveable{
 	
 	public Player(BubbleFrame mContext) { // Bubble의 정보를 얻기 위해 mContext를 받는다.
 		this.mContext = mContext; 
-		this.enemies = mContext.getEnemies();
 		initObject();
 		initSetting();
-		die();
 		initBackgroundPlayerService();
 	}//Player
 	
@@ -68,6 +65,7 @@ public class Player extends JLabel implements Moveable{
 		left=true;
 		new Thread(()->{
 			while(left) {//왼쪽 방향은 외벽까지 무한대로 움직일 수 있음
+				
 			x-=SPEED;
 			setIcon(playerL);
 			setLocation(x,y);
@@ -87,6 +85,7 @@ public class Player extends JLabel implements Moveable{
 		right = true;
 		new Thread(()->{
 			while(right) { // 오른쪽 방향은 외벽까지 무한대로 움직일 수 있음
+				
 				x+=SPEED;
 				setIcon(playerR);
 				setLocation(x,y);
@@ -137,26 +136,6 @@ public class Player extends JLabel implements Moveable{
 			down=false;
 		}).start();
 	}//down
-
-	@Override
-	public void die() { // 플레이가 죽는 메소드
-		new Thread(()->{ 
-		while(true) {
-			for(int j = 0; j < enemies.size(); j++) { // 다수의 적군 비교를 위한 for문
-				if(Math.abs(x-enemies.get(j).getX())<10 &&(Math.abs(y-enemies.get(j).getY())>0 && Math.abs(y-enemies.get(j).getY())<50)) { //적군과 접촉시 객체 삭제
-					mContext.remove(this);
-					mContext.repaint();
-				}//end if
-			}//end for
-			try {
-				Thread.sleep(1);// 연산이 빠르면 버그 발생 -> sleep을 준다
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}//end while
-		}).start();
-	}//die
-	
 	
 	public void initSetting() {
 		x=80;
@@ -174,9 +153,5 @@ public class Player extends JLabel implements Moveable{
 	private void initBackgroundPlayerService() {
 		new Thread(new BackgroundPlayerService(this)).start();
 	}//initBackgroundPlayerService
-
-
-
-	
 	
 }//class

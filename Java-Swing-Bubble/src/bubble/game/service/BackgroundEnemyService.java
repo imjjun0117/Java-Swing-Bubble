@@ -62,8 +62,8 @@ public class BackgroundEnemyService implements Runnable{
 
                 if (!enemy.isUp()) {
                     enemy.up();
-                }
-            }
+                }//end if 
+            }//end if
 			 
 //			try {
 //				Thread.sleep(10);
