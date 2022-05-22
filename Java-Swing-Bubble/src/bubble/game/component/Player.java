@@ -29,6 +29,8 @@ public class Player extends JLabel implements Moveable{
 	private ImageIcon playerR,playerL; // 캐릭터 좌,우 이미지
 	private boolean left,right,up,down; // 움직임 상태
 	
+	private int state;//플레이어 상태(0:살아있음 1:죽음)
+	
 	private boolean leftWallCrash; // 왼쪽 벽에 충돌한 상태
 	private boolean rightWallCrash; // 오른쪽 벽에 충돌한 상태
 	

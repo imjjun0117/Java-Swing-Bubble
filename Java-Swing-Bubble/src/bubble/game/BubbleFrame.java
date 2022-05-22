@@ -14,6 +14,7 @@ import bubble.bgm.BGM;
 import bubble.game.component.Bubble;
 import bubble.game.component.Enemy;
 import bubble.game.component.Player;
+import bubble.game.over.GameOverFrame;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -5,6 +5,7 @@ import javax.swing.JLabel;
 
 import bubble.game.BubbleFrame;
 import bubble.game.Moveable;
+import bubble.game.over.GameOverFrame;
 import bubble.game.service.BackgroundEnemyService;
 import bubble.game.state.EnemyWay;
 import lombok.Getter;
@@ -56,9 +57,11 @@ public class Enemy extends JLabel implements Moveable{
 		left=true;
 		new Thread(()->{
 			while(left) {//왼쪽 방향은 외벽까지 무한대로 움직일 수 있음
-					if(Math.abs(x-player.getX())<10 &&(Math.abs(y-player.getY())>0 && Math.abs(y-player.getY())<50)&&state==0) { //플레이어와 접촉시
+					if(Math.abs(x-player.getX())<10 &&(Math.abs(y-player.getY())>0 && Math.abs(y-player.getY())<50)&&state==0&&player.getState()==0) { //플레이어와 접촉시
 						mContext.remove(player);
 						mContext.repaint();
+						mContext.add(new GameOverFrame(mContext));
+						player.setState(1);
 					}//end if
 			x-=SPEED;
 			setIcon(enemyL);
@@ -79,9 +82,11 @@ public class Enemy extends JLabel implements Moveable{
 		right = true;
 		new Thread(()->{
 			while(right) { // 오른쪽 방향은 외벽까지 무한대로 움직일 수 있음
-				if(Math.abs(x-player.getX())<10 &&(Math.abs(y-player.getY())>0 && Math.abs(y-player.getY())<50)&&state==0) { //플레이어와 접촉시
+				if(Math.abs(x-player.getX())<10 &&(Math.abs(y-player.getY())>0 && Math.abs(y-player.getY())<50)&&state==0&&player.getState()==0) { //플레이어와 접촉시
 					mContext.remove(player);
 					mContext.repaint();
+					mContext.add(new GameOverFrame(mContext));
+					player.setState(1);
 				}//end if
 				x+=SPEED;
 				setIcon(enemyR);
@@ -104,9 +109,11 @@ public class Enemy extends JLabel implements Moveable{
 //			right=false;
 			//점프는 무한대로 이동할 수 없어 for문을 이용
 			for(int i = 0; i < 400/JUMP_SPEED; i++) { //점프 높이를 맞추기 위해 JUMP_SPEED를 나눠준다
-				if(Math.abs(x-player.getX())<10 &&(Math.abs(y-player.getY())>0 && Math.abs(y-player.getY())<50)&&state==0) { //플레이어와 접촉시
+				if(Math.abs(x-player.getX())<10 &&(Math.abs(y-player.getY())>0 && Math.abs(y-player.getY())<50)&&state==0&&player.getState()==0) { //플레이어와 접촉시
 					mContext.remove(player);
 					mContext.repaint();
+					mContext.add(new GameOverFrame(mContext));
+					player.setState(1);
 				}//end if
 				y-=JUMP_SPEED; // 점프 속도
 //				System.out.println(x+" / "+y);
@@ -129,9 +136,11 @@ public class Enemy extends JLabel implements Moveable{
 		new Thread(()->{
 			//점프를 하고 하강
 			while(down) {// 떨어짐을 제어하기 위해 for문이 아닌 while문을 사용 
-				if(Math.abs(x-player.getX())<10 &&(Math.abs(y-player.getY())>0 && Math.abs(y-player.getY())<50)&&state==0) { //플레이어와 접촉시
+				if(Math.abs(x-player.getX())<10 &&(Math.abs(y-player.getY())>0 && Math.abs(y-player.getY())<50)&&state==0&&player.getState()==0) { //플레이어와 접촉시
 					mContext.remove(player);
 					mContext.repaint();
+					mContext.add(new GameOverFrame(mContext));
+					player.setState(1);
 				}//end if
 				y+=JUMP_SPEED; // 하강 속도
 				setLocation(x,y);
