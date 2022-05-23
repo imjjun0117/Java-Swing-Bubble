@@ -64,12 +64,19 @@ public class BubbleFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}//initSetting
 	
-	public void createEnemies() { // 적군 두마리 생성 -> 위치 변경하여
+	public void createEnemies() { // 적군 3마리 생성 -> 위치 변경하여
 		enemies = new ArrayList<>();
-		enemies.add(new Enemy(mContext,100,178));
-		add(enemies.get(0));
-		enemies.add(new Enemy(mContext,870,290));
-		add(enemies.get(1));
+		new Thread(()->{
+				try {
+					for(int i = 0; i < 3; i++) {
+						enemies.add(new Enemy(mContext,100+(i*400),178));
+						add(enemies.get(i));
+					Thread.sleep(2000+(i*1000));
+					}//end for
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}//end catch
+		}).start();
 	}//createEnemies
 	
 	public void initListner() {

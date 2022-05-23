@@ -202,6 +202,6 @@ public class Bubble extends JLabel implements Moveable{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}//end catch
-		}
+		}//end while
 	}//touchBubble
 }//class
